@@ -26,7 +26,7 @@ if [ $1 = 'check' ];then
 	done
 
 	find /home/httpd/cgi-bin/qpkg/ |grep $php_script
-	if [ $? -eq 0 ]; then
+	if [ $? -ne 0 ]; then
 		ln -sf  $php_path /home/httpd/cgi-bin/qpkg/
 	fi
 fi
