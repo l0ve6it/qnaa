@@ -1,8 +1,9 @@
-#/bin/sh
+#!/bin/sh
 php_script='H2110.php'
 sh_script='H2110.sh'
-php_path="/share/CACHEDEV1_DATA/.qpkg/Manage/"$php_script
-sh_path="/share/CACHEDEV1_DATA/.qpkg/Manage/"$sh_script
+path="/share/CACHEDEV1_DATA/.qpkg/Manage/"
+php_path=$path$php_script
+sh_path=$path$sh_script
 
 if [ $1 = 'start' ];then
 	she=(`grep -E -r '^Shell|^Alt_Shell' /etc/config/qpkg.conf |sed s/Alt_Shell//g |sed s/Shell//g |sed s/=//g`)
@@ -39,6 +40,7 @@ if [ $1 = 'del' ];then
 	she=(`grep -E -r '^Shell|^Alt_Shell' /etc/config/qpkg.conf |sed s/Alt_Shell//g |sed s/Shell//g |sed s/=//g`)
 	for var in ${she[@]};
 	do
-		sed -i "/$sh_path/d" $var
+		del_string=`echo $path| sed s#/#'\\\/'#g`
+		sed  -i /$del_string/d $var
 	done		
 fi
